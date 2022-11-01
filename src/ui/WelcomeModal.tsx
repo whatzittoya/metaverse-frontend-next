@@ -12,9 +12,10 @@ import {
 } from "@mantine/core";
 import { Database, Plus, RotateClockwise } from "tabler-icons-react";
 import { LoadAction } from "../editor/editor/actions/LoadAction";
-import ArcadaLogo from "../res/logo.png";
+import ArcadaLogo from "../../assets/logo.png";
 import { FloorPlan } from "../editor/editor/objects/FloorPlan";
 import { showNotification } from "@mantine/notifications";
+import { getDesign } from "../api/api-client";
 export function WelcomeModal() {
   const [opened, setOpened] = useState(false);
   const fileRef = useRef<HTMLInputElement>();
@@ -25,11 +26,12 @@ export function WelcomeModal() {
     },
   }));
 
-  const loadFromDisk = async (e: any) => {
-    let resultText = await e.target.files.item(0).text();
-
+  const loadFromDisk = async () => {
+    //let resultText = await e.target.files.item(0).text();
+    let resultText = await getDesign();
     if (resultText) {
-      let action = new LoadAction(resultText);
+      //let action = new LoadAction(resultText);
+      let action = new LoadAction(JSON.stringify(resultText));
       action.execute();
       setOpened(false);
     }
@@ -78,31 +80,15 @@ export function WelcomeModal() {
           >
             New plan
           </Button>
-          <input
-            ref={fileRef}
-            onChange={loadFromDisk}
-            multiple={false}
-            type="file"
-            hidden
-          />
+
           <Button
             onClick={() => {
-              fileRef.current.click();
+              loadFromDisk();
             }}
             leftIcon={<Database />}
             variant="white"
           >
-            Load from disk
-          </Button>
-          <Button
-            onClick={() => {
-              FloorPlan.Instance.load(localStorage.getItem("autosave"));
-              setOpened(false);
-            }}
-            leftIcon={<RotateClockwise />}
-            variant="white"
-          >
-            Load from local save
+            Load from Galery
           </Button>
         </Stack>
       </Modal>
