@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { AxisX } from "tabler-icons-react";
 import { transformForSave } from "../helpers/TransformData";
 
 export const endpoint = process.env.NEXT_PUBLIC_API
@@ -8,6 +9,10 @@ export const endpoint = process.env.NEXT_PUBLIC_API
 const apiToken = process.env.NEXT_PUBLIC_TOKEN
   ? process.env.NEXT_PUBLIC_TOKEN
   : "3zcyEf6UumUDAk3op9pZLzay6YCPHrQt";
+
+const headers = {
+  Authorization: `bearer ${apiToken}`,
+};
 
 export function getCategoriesRequest() {
   return fetch(`${endpoint}items/category`);
@@ -37,11 +42,7 @@ export async function getDoor() {
 
 export async function addDesign<T>(data) {
   //transform data
-
   const transfData = transformForSave(data);
-  const headers = {
-    Authorization: `bearer ${apiToken}`,
-  };
   const url = `${endpoint}items/design/`;
   const r = await axios.post(url, transfData, {
     headers,
@@ -58,61 +59,80 @@ export async function addDesign<T>(data) {
   // return response.json();
 }
 
-export function getDesign() {
+export async function getDesign() {
+  const res = await axios.get(
+    `${endpoint}items/design/22?fields=name,id,object.*,object.object_id.image,wall.*`,
+    { headers }
+  );
+  const data = res.data;
+  data.floors = [data.data];
+  delete data.data;
+  (data.floors[0].furnitureArray = data.floors[0].object).map((obj) => {
+    obj.texturePath = obj.object_id.image;
+    obj.attachedToLeft = obj.attachedtoleft;
+    obj.attachedToRight = obj.attachedtoright;
+    delete obj.attachedtoleft;
+    delete obj.attachedtoright;
+    delete obj.object_id;
+    return obj;
+  });
+  data.floors[0].wallNodes = data.floors[0].wall.map((wall) => ({
+    id: wall.id_onload,
+    x: wall.x,
+    y: wall.y,
+  }));
+
+  data.floors[0].wallNodeLinks = data.floors[0].wall.map((wall) => [
+    wall.id_onload,
+    wall.link,
+  ]);
+
+  delete data.floors[0].wall;
+  delete data.floors[0].object;
+  data.furnitureId = data.floors[0].furnitureArray.length;
+  data.wallNodeId = data.floors[0].wallNodes.length;
+  console.log(data);
+  return data;
   return {
     floors: [
       {
         furnitureArray: [
           {
-            x: 2140,
-            y: 2460,
-            height: 0.8000000000000002,
-            width: 0.4,
+            x: 122.49645344567557,
+            y: 0,
+            object_id: 2,
+            height: 0.15,
+            width: 1,
             zIndex: 0,
             id: 1,
-            texturePath: "1d9c1279-e5b0-4c59-aab7-c1fc3aaf6927",
-            rotation: 1.5629697913328724,
-            orientation: 0,
-          },
-          {
-            x: 2210,
-            y: 2330,
-            height: 0.8,
-            width: 0.4,
-            zIndex: 0,
-            id: 2,
-            texturePath: "dd69e84d-eb9e-4d9a-a879-bd14bab29304",
+            texturePath: "fce1631f-9f02-451d-a522-07067a883da5",
             rotation: 0,
             orientation: 0,
-          },
-          {
-            x: 2170,
-            y: 2330,
-            height: 0.8,
-            width: 0.4,
-            zIndex: 0,
-            id: 3,
-            texturePath: "dd69e84d-eb9e-4d9a-a879-bd14bab29304",
-            rotation: 0,
-            orientation: 0,
-          },
-          {
-            x: 2060,
-            y: 2330,
-            height: 0.8,
-            width: 0.4,
-            zIndex: 0,
-            id: 6,
-            texturePath: "dd69e84d-eb9e-4d9a-a879-bd14bab29304",
-            rotation: 0,
-            orientation: 0,
+            attachedtoleft: 1,
+            attachedtoright: 2,
           },
         ],
         wallNodes: [
-          { id: 1, x: 2050, y: 2320 },
-          { id: 2, x: 2270, y: 2320 },
-          { id: 3, x: 2270, y: 2500 },
-          { id: 4, x: 2040, y: 2510 },
+          {
+            id: 1,
+            x: 2070,
+            y: 2050,
+          },
+          {
+            id: 2,
+            x: 2820,
+            y: 2030,
+          },
+          {
+            id: 3,
+            x: 2780,
+            y: 2420,
+          },
+          {
+            id: 4,
+            x: 1920,
+            y: 2430,
+          },
         ],
         wallNodeLinks: [
           [1, [2, 4]],
@@ -122,7 +142,9 @@ export function getDesign() {
         ],
       },
     ],
-    furnitureId: 6,
+    name: "My Design 2022-11-02T08:56:34.397Z",
+    status: "Published",
+    furnitureId: 1,
     wallNodeId: 4,
   };
 }
