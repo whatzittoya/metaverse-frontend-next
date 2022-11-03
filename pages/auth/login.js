@@ -1,13 +1,36 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import Auth from "../../layouts/Auth";
+import { useRouter } from "next/router";
 // layout for page
 
 export default function Login() {
-  const email = useRef("");
-  const password = useRef("");
+  const router = useRouter();
+  const emailInput = useRef("");
+  const passwordInput = useRef("");
   const handleClick = (e) => {
-    console.log("value 👉️", email.current.value);
+    e.preventDefault();
+    fetch("/api/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailInput.current.value,
+        password: passwordInput.current.value,
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        console.log(data);
+        if (data && data.token) {
+          //set cookie
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", data.user.data.first_name);
+          console.log(localStorage.getItem("user"));
+          router.push("/");
+        }
+      });
   };
   return (
     <>
@@ -29,7 +52,8 @@ export default function Login() {
                     </label>
                     <input
                       type="email"
-                      ref={email}
+                      value="whosendall@gmail.com"
+                      ref={emailInput}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
                     />
@@ -44,7 +68,8 @@ export default function Login() {
                     </label>
                     <input
                       type="password"
-                      ref={password}
+                      value="123qwe"
+                      ref={passwordInput}
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
                     />

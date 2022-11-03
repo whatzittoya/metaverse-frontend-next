@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { userAgent } from "next/server";
 // components
 
 export default function Navbar(props) {
+  const [token, setToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
+
+  const router = useRouter();
+  useEffect(() => {
+    const token_local = localStorage.getItem("token");
+    if (token_local !== null) {
+      setIsAuth(true);
+      console.log(localStorage.getItem("user"));
+
+      setUser(localStorage.getItem("user"));
+      console.log(user);
+    } else {
+    }
+  }, [token, user]);
+
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
@@ -32,12 +51,17 @@ export default function Navbar(props) {
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
               <li className="flex items-center">
-                <button
-                  className="text-blueGray-700 active:bg-blueGray-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
+                <Link
+                  href="/auth/login"
                   type="button"
+                  className="text-blueGray-700 active:bg-blueGray-600 text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0 ml-3 mb-3 ease-linear transition-all duration-150"
                 >
-                  <i className="fas fa-sign-in"></i> Sign In
-                </button>
+                  <span>
+                    {" "}
+                    <i className="fas fa-sign-in"></i>
+                    {user}
+                  </span>
+                </Link>
               </li>
             </ul>
           </div>
