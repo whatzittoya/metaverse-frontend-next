@@ -4,8 +4,10 @@ import { EditorRoot } from "../../editor/EditorRoot";
 import { WelcomeModal } from "../WelcomeModal";
 import { ToolNavbar } from "./ToolNavbar";
 import ArcadaLogo from "../../res/logo.png";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-export default function PageLayout() {
+export default function PageLayout({ id = null }) {
   // if (isMobile) {
   //     return <>
   //         <Modal
@@ -20,10 +22,10 @@ export default function PageLayout() {
   //         </Modal>
   //     </>
   // }
-
   return (
     <>
-      <WelcomeModal />
+      <WelcomeModal id={id} />
+
       <ToolNavbar></ToolNavbar>
 
       <EditorRoot />

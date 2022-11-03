@@ -16,7 +16,7 @@ import ArcadaLogo from "../../assets/logo.png";
 import { FloorPlan } from "../editor/editor/objects/FloorPlan";
 import { showNotification } from "@mantine/notifications";
 import { getDesign } from "../api/api-client";
-export function WelcomeModal() {
+export function WelcomeModal({ id = null }) {
   const [opened, setOpened] = useState(false);
   const fileRef = useRef<HTMLInputElement>();
   const image = <Image src={ArcadaLogo} />;
@@ -26,9 +26,10 @@ export function WelcomeModal() {
     },
   }));
 
-  const loadFromDisk = async () => {
+  const loadFromDisk = async (id) => {
     //let resultText = await e.target.files.item(0).text();
-    let resultText = await getDesign();
+    let resultText = await getDesign(id);
+    console.log(resultText);
     if (resultText) {
       //let action = new LoadAction(resultText);
       let action = new LoadAction(JSON.stringify(resultText));
@@ -48,6 +49,12 @@ export function WelcomeModal() {
     message:
       "⚒️ Use the tools on the left to create your floor plan. For detailed instructions, press the Help button on the left.",
   };
+  useEffect(() => {
+    if (id != null) {
+      loadFromDisk(id);
+    }
+  }, []);
+
   return (
     <>
       <Modal

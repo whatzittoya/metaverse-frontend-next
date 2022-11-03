@@ -59,9 +59,9 @@ export async function addDesign<T>(data) {
   // return response.json();
 }
 
-export async function getDesign() {
+export async function getDesign(id) {
   const res = await axios.get(
-    `${endpoint}items/design/22?fields=name,id,object.*,object.object_id.image,wall.*`,
+    `${endpoint}items/design/${id}?fields=name,id,object.*,object.object_id.image,wall.*`,
     { headers }
   );
   const data = res.data;
