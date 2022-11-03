@@ -17,7 +17,13 @@ export function transformData(res) {
 export function transformForSave(data) {
   const transfDataFloor = data.floors.map((floor) => {
     if ("furnitureArray" in floor) {
-      floor.object = floor.furnitureArray;
+      floor.object = floor.furnitureArray.map((fur) => {
+        fur.attachedtoleft = fur.attachedToLeft;
+        fur.attachedtoright = fur.attachedToRight;
+        delete fur.attachedToLeft;
+        delete fur.attachedToRight;
+        return fur;
+      });
       delete floor.furnitureArray;
     }
     if ("wallNodes" in floor) {
@@ -43,5 +49,6 @@ export function transformForSave(data) {
     return floor;
   });
   delete data.floors;
+  console.log(transfDataFloor[0]);
   return { ...data, ...transfDataFloor[0] };
 }

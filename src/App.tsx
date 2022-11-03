@@ -10,6 +10,12 @@ function App() {
   useEffect(() => {
     getCategories();
   }, []);
-  return <></>;
+  return (
+    <>
+      <NotificationsProvider>
+        <PageLayout />
+      </NotificationsProvider>
+    </>
+  );
 }
 export default App;
