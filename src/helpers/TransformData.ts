@@ -15,6 +15,7 @@ export function transformData(res) {
 }
 
 export function transformForSave(data) {
+  data.json = JSON.stringify(data);
   const transfDataFloor = data.floors.map((floor) => {
     if ("furnitureArray" in floor) {
       floor.object = floor.furnitureArray.map((fur) => {
@@ -24,6 +25,7 @@ export function transformForSave(data) {
         delete fur.attachedToRight;
         return fur;
       });
+
       delete floor.furnitureArray;
     }
     if ("wallNodes" in floor) {

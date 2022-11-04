@@ -14,7 +14,7 @@ export class SaveAction implements Action {
 
     const result = await addDesign(JSON.parse(data));
     console.log(result);
-    let blob = new Blob([data], { type: "text/plain;charset=utf-8" });
-    saveAs(blob, "floor_plan.txt");
+    //let blob = new Blob([data], { type: "text/plain;charset=utf-8" });
+    //saveAs(blob, "floor_plan.txt");
   }
 }
