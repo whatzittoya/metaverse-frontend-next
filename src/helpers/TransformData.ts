@@ -17,7 +17,7 @@ export function transformData(res) {
 export function transformForSave(data) {
   if ("furnitureArray" in data.floors[0]) {
     const f = data.floors[0].furnitureArray;
-    const person = f.find((obj) => obj.object_id === 16);
+    const person = f.find((obj) => obj.object_id === 26);
     data.person = person;
   }
   data.json = JSON.stringify(data);

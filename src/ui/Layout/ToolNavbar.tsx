@@ -110,10 +110,10 @@ function AddMenu({ setter }) {
     const data = {
       category: { name: "person" },
       height: 1,
-      imagePath: "c52df19e-7d45-452c-a97e-237f14e0f385",
+      imagePath: "c0e01b87-4128-4811-80a4-95bcc1afa56f",
       name: "person",
       width: 1,
-      _id: 16,
+      _id: 26,
     };
     let action = new AddFurnitureAction(data);
     action.execute();
