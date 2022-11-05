@@ -35,6 +35,7 @@ import {
   Table,
   TableOff,
   Tag,
+  UserCircle,
 } from "tabler-icons-react";
 import { cleanNotifications, showNotification } from "@mantine/notifications";
 import { useStore } from "../../stores/EditorStore";
@@ -50,6 +51,7 @@ import { HelpDialog } from "../HelpDialog";
 import { DeleteFloorAction } from "../../editor/editor/actions/DeleteFloorAction";
 import { useFurnitureStore } from "../../stores/FurnitureStore";
 import { getDesign } from "../../api/api-client";
+import { AddFurnitureAction } from "../../editor/editor/actions/AddFurnitureAction";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -103,6 +105,19 @@ function AddMenu({ setter }) {
       <Plus />
     </UnstyledButton>
   );
+
+  function add() {
+    const data = {
+      category: { name: "person" },
+      height: 1,
+      imagePath: "c52df19e-7d45-452c-a97e-237f14e0f385",
+      name: "person",
+      width: 1,
+      _id: 16,
+    };
+    let action = new AddFurnitureAction(data);
+    action.execute();
+  }
 
   return (
     <>
@@ -185,6 +200,20 @@ function AddMenu({ setter }) {
           }}
         >
           Add door
+        </Menu.Item>
+        <Menu.Item
+          icon={<UserCircle size={18} />}
+          onClick={() => {
+            setter(-1);
+            add();
+            showNotification({
+              title: "🚪 Add Person",
+              message: "",
+              color: "blue",
+            });
+          }}
+        >
+          Add Person
         </Menu.Item>
       </Menu>
     </>

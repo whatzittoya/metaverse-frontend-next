@@ -14,6 +14,7 @@ function add(item: IFurnitureData) {
 
 export function FurnitureItem(item: IFurnitureData) {
   let data = item.data;
+
   return (
     <Card onClick={() => add(item)} shadow="sm" p="lg">
       <Card.Section style={{ height: 120, padding: 5 }}>
