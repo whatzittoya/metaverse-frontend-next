@@ -11,4 +11,5 @@ export interface IFurnitureSerializable {
   zIndex: number;
   attachedToLeft?: number;
   attachedToRight?: number;
+  category?: any;
 }

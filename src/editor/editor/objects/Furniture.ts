@@ -19,6 +19,7 @@ export class Furniture extends Sprite {
   public resourcePath: string;
   private orientation: number;
   public centerAngle: number;
+  public category: String;
   constructor(
     data: FurnitureData,
     id: number,
@@ -29,9 +30,11 @@ export class Furniture extends Sprite {
   ) {
     let texture = Texture.from(`${endpoint}assets/${data.imagePath}`);
     super(texture);
+
     this.resourcePath = data.imagePath;
     this.id = id;
     this.object_id = parseInt(data._id);
+    this.category = data.category;
     this.orientation = 0;
     this.cursor = "pointer";
     if (attachedTo) {
@@ -140,7 +143,6 @@ export class Furniture extends Sprite {
     ev.stopPropagation();
     if (ev.data.button == 1) {
       this.zIndex++;
-      console.log(this.zIndex);
     }
     switch (useStore.getState().activeTool) {
       case Tool.Edit: {
@@ -175,7 +177,7 @@ export class Furniture extends Sprite {
       texturePath: this.resourcePath,
       rotation: this.rotation,
       orientation: this.orientation,
-
+      category: this.category,
       attachedToLeft: this.attachedToLeft,
       attachedToRight: this.attachedToRight,
     };

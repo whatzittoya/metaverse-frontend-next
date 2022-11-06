@@ -14,7 +14,7 @@ export interface FurnitureData {
   width: number;
   height: number;
   imagePath: string;
-  category?: string;
+  category?: any;
   zIndex?: number;
 }
 

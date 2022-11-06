@@ -50,8 +50,9 @@ import { NavbarLink } from "../NavbarLink";
 import { HelpDialog } from "../HelpDialog";
 import { DeleteFloorAction } from "../../editor/editor/actions/DeleteFloorAction";
 import { useFurnitureStore } from "../../stores/FurnitureStore";
-import { getDesign } from "../../api/api-client";
+import { getDesign, getPeople } from "../../api/api-client";
 import { AddFurnitureAction } from "../../editor/editor/actions/AddFurnitureAction";
+import { transformData } from "../../helpers/TransformData";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -107,16 +108,12 @@ function AddMenu({ setter }) {
   );
 
   function add() {
-    const data = {
-      category: { name: "person" },
-      height: 1,
-      imagePath: "c0e01b87-4128-4811-80a4-95bcc1afa56f",
-      name: "person",
-      width: 1,
-      _id: 26,
-    };
-    let action = new AddFurnitureAction(data);
-    action.execute();
+    getPeople().then((res_raw) => {
+      const res = transformData(res_raw);
+
+      let action = new AddFurnitureAction(res[0]);
+      action.execute();
+    });
   }
 
   return (
@@ -202,18 +199,20 @@ function AddMenu({ setter }) {
           Add door
         </Menu.Item>
         <Menu.Item
-          icon={<UserCircle size={18} />}
+          icon={<Eye size={18} />}
           onClick={() => {
             setter(-1);
+            setTool(Tool.PeopleAdd);
             add();
+            cleanNotifications();
             showNotification({
-              title: "🚪 Add Person",
-              message: "",
+              title: "Add Starting View",
+              message: "Click on layout to add starting view",
               color: "blue",
             });
           }}
         >
-          Add Person
+          Add Starting View
         </Menu.Item>
       </Menu>
     </>

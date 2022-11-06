@@ -32,6 +32,14 @@ export async function getWindow() {
   ).json();
 }
 
+export async function getPeople() {
+  return await (
+    await fetch(
+      `${endpoint}items/object?fields=id,name,width,height,image,category.name&filter[category][name]=person`
+    )
+  ).json();
+}
+
 export async function getDoor() {
   return await (
     await fetch(
@@ -43,25 +51,19 @@ export async function getDoor() {
 export async function addDesign<T>(data) {
   //transform data
   const transfData = transformForSave(data);
+  console.log("after");
+  console.log(transfData);
   const url = `${endpoint}items/design/`;
   const r = await axios.post(url, transfData, {
     headers,
   });
+
   return r.status;
-  // const response = await fetch(url, {
-  //   method: "POST", // *GET, POST, PUT, DELETE, etc.
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorize: `Bearer ${apiToken}`,
-  //   },
-  //   body: JSON.stringify(transfData),
-  // });
-  // return response.json();
 }
 
 export async function getDesign(id) {
   const res = await axios.get(
-    `${endpoint}items/design/${id}?fields=name,id,object.*,object.object_id.image,wall.*`,
+    `${endpoint}items/design/${id}?fields=name,id,object.*,object.object_id.id,object.object_id.image,object.object_id.category.name,wall.*`,
     { headers }
   );
   const data = res.data;
@@ -69,11 +71,12 @@ export async function getDesign(id) {
   delete data.data;
   (data.floors[0].furnitureArray = data.floors[0].object).map((obj) => {
     obj.texturePath = obj.object_id.image;
+    obj.category = obj.object_id.category.name;
     obj.attachedToLeft = obj.attachedtoleft;
     obj.attachedToRight = obj.attachedtoright;
     delete obj.attachedtoleft;
     delete obj.attachedtoright;
-    delete obj.object_id;
+    obj.object_id = obj.object_id.id;
     return obj;
   });
   data.floors[0].wallNodes = data.floors[0].wall.map((wall) => ({
@@ -91,60 +94,5 @@ export async function getDesign(id) {
   delete data.floors[0].object;
   data.furnitureId = data.floors[0].furnitureArray.length;
   data.wallNodeId = data.floors[0].wallNodes.length;
-  console.log(data);
   return data;
-  return {
-    floors: [
-      {
-        furnitureArray: [
-          {
-            x: 122.49645344567557,
-            y: 0,
-            object_id: 2,
-            height: 0.15,
-            width: 1,
-            zIndex: 0,
-            id: 1,
-            texturePath: "fce1631f-9f02-451d-a522-07067a883da5",
-            rotation: 0,
-            orientation: 0,
-            attachedtoleft: 1,
-            attachedtoright: 2,
-          },
-        ],
-        wallNodes: [
-          {
-            id: 1,
-            x: 2070,
-            y: 2050,
-          },
-          {
-            id: 2,
-            x: 2820,
-            y: 2030,
-          },
-          {
-            id: 3,
-            x: 2780,
-            y: 2420,
-          },
-          {
-            id: 4,
-            x: 1920,
-            y: 2430,
-          },
-        ],
-        wallNodeLinks: [
-          [1, [2, 4]],
-          [2, [3]],
-          [3, [4]],
-          [4, []],
-        ],
-      },
-    ],
-    name: "My Design 2022-11-02T08:56:34.397Z",
-    status: "Published",
-    furnitureId: 1,
-    wallNodeId: 4,
-  };
 }
