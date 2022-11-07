@@ -44,6 +44,7 @@ import { LoadAction } from "../../editor/editor/actions/LoadAction";
 import { SaveAction } from "../../editor/editor/actions/SaveAction";
 import { Tool } from "../../editor/editor/constants";
 import { FurnitureAddPanel } from "../FurnitureControls/FurnitureAddPanel/FurnitureAddPanel";
+import { FurniturePropPanel } from "../FurnitureControls/FurniturePropPanel/FurniturePropPanel";
 import { PrintAction } from "../../editor/editor/actions/PrintAction";
 import { ToggleLabelAction } from "../../editor/editor/actions/ToggleLabelAction";
 import { NavbarLink } from "../NavbarLink";
@@ -132,6 +133,7 @@ function AddMenu({ setter }) {
       >
         <FurnitureAddPanel />
       </Drawer>
+
       <Menu
         control={addButton}
         position="right"
@@ -224,21 +226,36 @@ export function ToolNavbar() {
 
   const { setTool, floor } = useStore();
   const { setSnap, snap } = useStore();
+  const [propOpened, setPropOpened] = useState(false);
 
   const fileRef = useRef<HTMLInputElement>();
   const { classes, cx } = useStyles();
 
   const toolModes = modes.map((link, index) => (
-    <NavbarLink
-      {...link}
-      key={link.label}
-      active={index === active}
-      onClick={() => {
-        setActive(index);
-
-        setTool(link.tool);
-      }}
-    />
+    <>
+      <Drawer
+        opened={useStore.getState().propPanel}
+        position="right"
+        onClose={() => {
+          useStore.setState({ propPanel: false });
+        }}
+        title="Properties furniture"
+        padding="xl"
+        size="lg"
+        overlayOpacity={0}
+      >
+        <FurniturePropPanel />
+      </Drawer>
+      <NavbarLink
+        {...link}
+        key={link.label}
+        active={index === active}
+        onClick={() => {
+          setActive(index);
+          setTool(link.tool);
+        }}
+      />
+    </>
   ));
 
   const handleChange = async (e: any) => {

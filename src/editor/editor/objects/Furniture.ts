@@ -146,6 +146,14 @@ export class Furniture extends Sprite {
     }
     switch (useStore.getState().activeTool) {
       case Tool.Edit: {
+        useStore.setState({
+          furniture: {
+            name: this.name,
+            description: "nothing",
+          },
+        });
+        useStore.setState({ propPanel: true });
+
         const action = new EditFurnitureAction(this);
         action.execute();
         break;

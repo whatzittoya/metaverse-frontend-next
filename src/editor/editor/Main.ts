@@ -48,7 +48,7 @@ export class Main extends Viewport {
       .pinch()
       .wheel()
       .clampZoom({ minScale: 1.0, maxScale: 6.0 });
-    this.bkgPattern = TilingSprite.from("./pattern.svg", {
+    this.bkgPattern = TilingSprite.from("/pattern.svg", {
       width: this.worldWidth ?? 0,
       height: this.worldHeight ?? 0,
     });
