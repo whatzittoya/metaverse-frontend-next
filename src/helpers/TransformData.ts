@@ -6,6 +6,11 @@ export function transformData(res) {
     }
     if ("id" in elem) {
       elem._id = elem.id;
+      elem.object_id = elem.id;
+      delete elem.id;
+    }
+    if ("category" in elem) {
+      elem.category = elem.category.name;
       delete elem.id;
     }
 
@@ -15,14 +20,32 @@ export function transformData(res) {
 }
 
 export function transformForSave(data) {
-  data.json = JSON.stringify(data);
+  if ("furnitureArray" in data.floors[0]) {
+    const f = data.floors[0].furnitureArray;
+    const person = f.find((obj) => obj.category === "person");
+    data.person = person;
+    const json_data = f.filter(function (obj) {
+      if (obj.category === "person") {
+        data.person = obj;
+      }
+      return obj.category !== "person";
+    });
+    data.json = JSON.stringify(json_data);
+  } else {
+    data.json = JSON.stringify(data);
+  }
   const transfDataFloor = data.floors.map((floor) => {
     if ("furnitureArray" in floor) {
       floor.object = floor.furnitureArray.map((fur) => {
-        fur.attachedtoleft = fur.attachedToLeft;
-        fur.attachedtoright = fur.attachedToRight;
+        if ("attachedToLeft" in fur) {
+          fur.attachedtoleft = fur.attachedToLeft;
+        }
+        if ("attachedToRight" in fur) {
+          fur.attachedtoright = fur.attachedToRight;
+        }
         delete fur.attachedToLeft;
         delete fur.attachedToRight;
+        delete fur.id;
         return fur;
       });
 
@@ -51,6 +74,5 @@ export function transformForSave(data) {
     return floor;
   });
   delete data.floors;
-  console.log(transfDataFloor[0]);
   return { ...data, ...transfDataFloor[0] };
 }

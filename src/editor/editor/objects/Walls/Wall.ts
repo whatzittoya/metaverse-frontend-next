@@ -1,5 +1,5 @@
 import { Graphics, InteractionEvent } from "pixi.js";
-import { getDoor, getWindow } from "../../../../api/api-client";
+import { getDoor, getPeople, getWindow } from "../../../../api/api-client";
 import { euclideanDistance } from "../../../../helpers/EuclideanDistance";
 import { Point } from "../../../../helpers/Point";
 import { getCorrespondingY } from "../../../../helpers/Slope";

@@ -35,6 +35,7 @@ import {
   Table,
   TableOff,
   Tag,
+  UserCircle,
 } from "tabler-icons-react";
 import { cleanNotifications, showNotification } from "@mantine/notifications";
 import { useStore } from "../../stores/EditorStore";
@@ -49,7 +50,9 @@ import { NavbarLink } from "../NavbarLink";
 import { HelpDialog } from "../HelpDialog";
 import { DeleteFloorAction } from "../../editor/editor/actions/DeleteFloorAction";
 import { useFurnitureStore } from "../../stores/FurnitureStore";
-import { getDesign } from "../../api/api-client";
+import { getDesign, getPeople } from "../../api/api-client";
+import { AddFurnitureAction } from "../../editor/editor/actions/AddFurnitureAction";
+import { transformData } from "../../helpers/TransformData";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -103,6 +106,15 @@ function AddMenu({ setter }) {
       <Plus />
     </UnstyledButton>
   );
+
+  function add() {
+    getPeople().then((res_raw) => {
+      const res = transformData(res_raw);
+
+      let action = new AddFurnitureAction(res[0]);
+      action.execute();
+    });
+  }
 
   return (
     <>
@@ -185,6 +197,22 @@ function AddMenu({ setter }) {
           }}
         >
           Add door
+        </Menu.Item>
+        <Menu.Item
+          icon={<Eye size={18} />}
+          onClick={() => {
+            setter(-1);
+            setTool(Tool.PeopleAdd);
+            add();
+            cleanNotifications();
+            showNotification({
+              title: "Add Starting View",
+              message: "Click on layout to add starting view",
+              color: "blue",
+            });
+          }}
+        >
+          Add Starting View
         </Menu.Item>
       </Menu>
     </>

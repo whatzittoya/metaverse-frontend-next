@@ -17,7 +17,6 @@ function App() {
     if (typeof window !== undefined) {
       setFoundwindow(true);
     }
-    console.log(id);
     getCategories();
   }, []);
   if (foundwindow) {
