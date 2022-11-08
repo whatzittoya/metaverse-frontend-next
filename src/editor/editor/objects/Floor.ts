@@ -32,6 +32,7 @@ export class Floor extends Container {
           height: fur.height,
           imagePath: fur.texturePath,
           _id: fur.object_id,
+          name: fur.name,
 
           category: fur.category,
         };
@@ -51,7 +52,6 @@ export class Floor extends Container {
           fur.attachedToRight,
           fur.orientation
         );
-        console.log(fur.id, object);
         this.furnitureArray.set(fur.id, object);
 
         if (attachedTo != undefined) {

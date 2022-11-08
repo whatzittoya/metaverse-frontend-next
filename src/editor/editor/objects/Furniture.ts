@@ -20,6 +20,7 @@ export class Furniture extends Sprite {
   private orientation: number;
   public centerAngle: number;
   public category: String;
+  public name: String;
   constructor(
     data: FurnitureData,
     id: number,
@@ -30,7 +31,8 @@ export class Furniture extends Sprite {
   ) {
     let texture = Texture.from(`${endpoint}assets/${data.imagePath}`);
     super(texture);
-
+    console.log(data);
+    this.name = data.name;
     this.resourcePath = data.imagePath;
     this.id = id;
     this.object_id = parseInt(data._id);
@@ -153,7 +155,7 @@ export class Furniture extends Sprite {
           },
         });
         useStore.setState({ propPanel: true });
-
+        console.log(this);
         const action = new EditFurnitureAction(this);
         action.execute();
         break;
@@ -181,6 +183,7 @@ export class Furniture extends Sprite {
       height: this.height / METER,
       width: this.width / METER,
       zIndex: this.zIndex,
+      name: this.name,
       id: this.id,
       texturePath: this.resourcePath,
       rotation: this.rotation,

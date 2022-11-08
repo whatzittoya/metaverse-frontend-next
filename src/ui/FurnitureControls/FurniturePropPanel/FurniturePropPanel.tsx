@@ -31,12 +31,11 @@ export function FurniturePropPanel() {
                       className="block text-gray-700 text-sm font-bold mb-2"
                       htmlFor="username"
                     >
-                      Name
+                      Name {useStore.getState().furniture.name}
                     </label>
                     <label
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      className="block text-gray-700 text-sm font-bold mb-2"
                       id="username"
-                      placeholder="Username"
                     />
                   </div>
                   <div className="mb-6">
@@ -47,19 +46,13 @@ export function FurniturePropPanel() {
                       Description
                     </label>
                     <textarea
-                      className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                      className="resize rounded-md text-gray-700 text-sm font-bold mb-2"
                       id="description"
                     />
-                    <p className="text-red-500 text-xs italic">
-                      Please choose a password.
-                    </p>
                   </div>
                   <div className="flex items-center justify-between">
-                    <button
-                      className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-                      type="button"
-                    >
-                      Sign Up
+                    <button className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150">
+                      Update
                     </button>
                   </div>
                 </form>

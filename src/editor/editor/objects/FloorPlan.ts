@@ -87,8 +87,9 @@ export class FloorPlan extends Container {
   public load(planText: string) {
     let plan: FloorPlanSerializable = JSON.parse(planText);
     this.reset();
+    console.log("load");
     for (let floorData of plan.floors) {
-
+      console.log(floorData);
       let floor = new Floor(floorData);
       this.floors.push(floor);
     }
