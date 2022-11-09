@@ -11,6 +11,7 @@ export interface Category {
 export interface FurnitureData {
   _id?: string;
   name?: string;
+  description?: string;
   width: number;
   height: number;
   imagePath: string;

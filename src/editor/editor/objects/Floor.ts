@@ -33,7 +33,7 @@ export class Floor extends Container {
           imagePath: fur.texturePath,
           _id: fur.object_id,
           name: fur.name,
-
+          description: fur.description,
           category: fur.category,
         };
         if (fur.zIndex) {
@@ -170,6 +170,11 @@ export class Floor extends Container {
     plan.furnitureArray = serializedFurniture;
     return plan;
   }
+
+  public updateFurnitureDesc(id: number, descr: string) {
+    this.furnitureArray.get(id).description = descr;
+  }
+
   public setFurniturePosition(
     id: number,
     x: number,

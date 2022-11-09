@@ -3,6 +3,7 @@ export interface IFurnitureSerializable {
   object_id: number;
   texturePath: string;
   name: string;
+  description?: string;
   width: number;
   height: number;
   rotation: number;

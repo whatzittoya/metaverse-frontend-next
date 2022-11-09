@@ -89,7 +89,6 @@ export class FloorPlan extends Container {
     this.reset();
     console.log("load");
     for (let floorData of plan.floors) {
-      console.log(floorData);
       let floor = new Floor(floorData);
       this.floors.push(floor);
     }
@@ -146,6 +145,10 @@ export class FloorPlan extends Container {
       attachedToLeft,
       attachedToRight
     );
+  }
+
+  public updateFurnitureDesc(id: number, desc: string) {
+    this.floors[this.currentFloor].updateFurnitureDesc(id, desc);
   }
 
   public setFurniturePosition(

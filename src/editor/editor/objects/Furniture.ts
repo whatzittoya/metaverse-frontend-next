@@ -21,6 +21,7 @@ export class Furniture extends Sprite {
   public centerAngle: number;
   public category: String;
   public name: String;
+  public description: String;
   constructor(
     data: FurnitureData,
     id: number,
@@ -33,6 +34,7 @@ export class Furniture extends Sprite {
     super(texture);
     console.log(data);
     this.name = data.name;
+    this.description = data.description;
     this.resourcePath = data.imagePath;
     this.id = id;
     this.object_id = parseInt(data._id);
@@ -150,8 +152,9 @@ export class Furniture extends Sprite {
       case Tool.Edit: {
         useStore.setState({
           furniture: {
+            id: this.id,
             name: this.name,
-            description: "nothing",
+            description: this.description ? this.description : "",
           },
         });
         useStore.setState({ propPanel: true });
@@ -184,6 +187,7 @@ export class Furniture extends Sprite {
       width: this.width / METER,
       zIndex: this.zIndex,
       name: this.name,
+      description: this.description,
       id: this.id,
       texturePath: this.resourcePath,
       rotation: this.rotation,
