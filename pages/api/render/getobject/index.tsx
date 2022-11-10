@@ -15,7 +15,11 @@ export default async function handler(req, res) {
       )
         .then((r) => r.json())
         .then((data) => {
-          res.status(200).json(data);
+          const data_w_url = data.data.map((d) => {
+            d.image_url = `${api}assets/${d.image}`;
+            return d;
+          });
+          res.status(200).json({ data: data_w_url });
         });
     }
   }
