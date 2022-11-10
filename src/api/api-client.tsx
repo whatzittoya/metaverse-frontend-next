@@ -48,11 +48,26 @@ export async function getDoor() {
   ).json();
 }
 
-export async function addDesign<T>(data) {
+export async function addDesign<T>(data, blob) {
   //transform data
+
+  const headers_multi = {
+    Authorization: `bearer ${apiToken}`,
+    "Content-Type": "multipart/form-data",
+  };
+
+  const formData = new FormData();
+
+  // const base64Response = await fetch(image);
+  // const blob = await base64Response.blob();
+  formData.append("title", "layout");
+  formData.append("file", blob);
+  const upload = await axios.post(`${endpoint}files`, formData, {
+    headers: headers_multi,
+  });
+  data.image = upload.data.data.id;
   const transfData = transformForSave(data);
-  console.log("after");
-  console.log(transfData);
+  //console.log(transfData);
   const url = `${endpoint}items/design/`;
   const r = await axios.post(url, transfData, {
     headers,

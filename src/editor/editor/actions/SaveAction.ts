@@ -11,8 +11,9 @@ export class SaveAction implements Action {
 
   public async execute() {
     let data = this.receiver.save();
-    console.log(JSON.parse(data));
-    const result = await addDesign(JSON.parse(data));
+    //console.log(JSON.parse(data));
+    const image = await this.receiver.getImage();
+    const result = await addDesign(JSON.parse(data), image);
     // console.log(result);
     //let blob = new Blob([data], { type: "text/plain;charset=utf-8" });
     //saveAs(blob, "floor_plan.txt");

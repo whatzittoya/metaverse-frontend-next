@@ -8,6 +8,7 @@ import { Action } from "../actions/Action";
 import { useStore } from "../../../stores/EditorStore";
 import { Point } from "../../../helpers/Point";
 import { showNotification } from "@mantine/notifications";
+import axios from "axios";
 
 export class FloorPlan extends Container {
   private static instance: FloorPlan;
@@ -60,17 +61,45 @@ export class FloorPlan extends Container {
     this.addChild(this.floors[this.currentFloor]);
   }
 
-  public print() {
+  public async getImage() {
     let opts: IRendererOptionsAuto = {
       preserveDrawingBuffer: true,
     };
 
     let renderer = autoDetectRenderer(opts);
-    const image = renderer.plugins.extract.image(this);
-    let popup = window.open();
-    popup.document.body.appendChild(image);
-    popup.focus();
-    popup.print();
+    const image = renderer.plugins.extract.base64(this);
+    const base64Response = await fetch(image);
+    const blob = await base64Response.blob();
+    return blob;
+  }
+
+  public async print() {
+    let opts: IRendererOptionsAuto = {
+      preserveDrawingBuffer: true,
+    };
+
+    let renderer = autoDetectRenderer(opts);
+    const image = renderer.plugins.extract.base64(this);
+    // const formData = new FormData();
+
+    // const base64Response = await fetch(image);
+    // const blob = await base64Response.blob();
+    // formData.append("title", "My First File");
+    // formData.append("file", blob);
+    // const apiToken = process.env.NEXT_PUBLIC_TOKEN
+    //   ? process.env.NEXT_PUBLIC_TOKEN
+    //   : "3zcyEf6UumUDAk3op9pZLzay6YCPHrQt";
+
+    // const headers = {
+    //   Authorization: `bearer ${apiToken}`,
+    //   "Content-Type": "multipart/form-data",
+    // };
+    // console.log(image);
+    // await axios.post("http://10.236.127.160:8055/files", formData, { headers });
+    // let popup = window.open();
+    // popup.document.body.appendChild(image);
+    // popup.focus();
+    // popup.print();
   }
 
   public save() {
