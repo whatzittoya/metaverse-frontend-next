@@ -1,5 +1,5 @@
 import axios from "axios";
-const api = process.env.NEXT_PUBLIC_API;
+const api = process.env.NEXT_PUBLIC_API_LOCAL;
 
 export default async function handler(req, res) {
   if (req.method === "POST") {

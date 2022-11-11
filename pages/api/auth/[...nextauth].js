@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers/credentials";
 import axios from "axios";
 
-const api = process.env.NEXT_PUBLIC_API;
+const api = process.env.NEXT_PUBLIC_API_LOCAL;
 const providers = [
   Providers({
     name: "Credentials",
