@@ -29,7 +29,6 @@ export function WelcomeModal({ id = null }) {
   const loadFromDisk = async (id) => {
     //let resultText = await e.target.files.item(0).text();
     let resultText = await getDesign(id);
-    console.log(resultText);
     if (resultText) {
       //let action = new LoadAction(resultText);
       let action = new LoadAction(JSON.stringify(resultText));
@@ -41,7 +40,7 @@ export function WelcomeModal({ id = null }) {
   const theme = useMantineTheme();
   const { classes } = useStyles();
   useEffect(() => {
-    setOpened(true);
+    // setOpened(true);
   }, []);
 
   const notification = {
@@ -53,6 +52,7 @@ export function WelcomeModal({ id = null }) {
     if (id != null) {
       loadFromDisk(id);
     }
+    showNotification(notification);
   }, []);
 
   return (

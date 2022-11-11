@@ -164,7 +164,7 @@ export function HelpDialog() {
         onClose={() => setOpened(false)}
         size="lg"
         radius="md"
-        position={{ top: 20, right: 20 }}
+        position={{ bottom: 20, right: 20 }}
       >
         <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
           <b>{helpBody[activeTool].title}</b>

@@ -8,6 +8,8 @@ import {
   Menu,
   Divider,
   Drawer,
+  Dialog,
+  Text,
 } from "@mantine/core";
 import {
   Icon as TablerIcon,
@@ -36,6 +38,7 @@ import {
   TableOff,
   Tag,
   UserCircle,
+  Check,
 } from "tabler-icons-react";
 import { cleanNotifications, showNotification } from "@mantine/notifications";
 import { useStore } from "../../stores/EditorStore";
@@ -227,6 +230,7 @@ export function ToolNavbar() {
   const { setTool, floor } = useStore();
   const { setSnap, snap } = useStore();
   const [propOpened, setPropOpened] = useState(false);
+  const [saveDialogOpenend, setSaveDialogOpenend] = useState(false);
 
   const fileRef = useRef<HTMLInputElement>();
   const { classes, cx } = useStyles();
@@ -349,28 +353,45 @@ export function ToolNavbar() {
         </Navbar.Section>
         <Navbar.Section>
           <Group direction="column" align="center" spacing={0}>
-            <NavbarLink
+            {/* <NavbarLink
               icon={Printer}
               label="Print"
               onClick={() => {
                 let action = new PrintAction();
                 action.execute();
               }}
-            />
+            /> */}
             <NavbarLink
               icon={DeviceFloppy}
               label="Save plan"
               onClick={() => {
                 let action = new SaveAction();
-                action.execute();
+                const result = action.execute();
+                if (result) {
+                  setSaveDialogOpenend(true);
+                }
               }}
             />
-
-            <NavbarLink
+            <Dialog
+              opened={saveDialogOpenend}
+              withCloseButton
+              onClose={() => setSaveDialogOpenend(false)}
+              size="lg"
+              radius="md"
+              position={{ bottom: 20, right: 20 }}
+            >
+              <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
+                <span className="grid">
+                  <Check color="#108410"></Check>
+                  <b>Layout saved</b>
+                </span>
+              </Text>
+            </Dialog>
+            {/* <NavbarLink
               onClick={handleChange}
               icon={Upload}
               label="Load plan"
-            />
+            /> */}
           </Group>
         </Navbar.Section>
       </Navbar>
