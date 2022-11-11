@@ -57,6 +57,7 @@ import { useFurnitureStore } from "../../stores/FurnitureStore";
 import { getDesign, getPeople } from "../../api/api-client";
 import { AddFurnitureAction } from "../../editor/editor/actions/AddFurnitureAction";
 import { transformData } from "../../helpers/TransformData";
+import ConfirmationModal from "../ConfirmationModal";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -230,7 +231,9 @@ export function ToolNavbar() {
   const { setTool, floor } = useStore();
   const { setSnap, snap } = useStore();
   const [propOpened, setPropOpened] = useState(false);
+  const [saveConfirmationOpenend, setSaveConfirmationOpenend] = useState(false);
   const [saveDialogOpenend, setSaveDialogOpenend] = useState(false);
+  const [designName, setDesignName] = useState("My Design");
 
   const fileRef = useRef<HTMLInputElement>();
   const { classes, cx } = useStyles();
@@ -365,11 +368,7 @@ export function ToolNavbar() {
               icon={DeviceFloppy}
               label="Save plan"
               onClick={() => {
-                let action = new SaveAction();
-                const result = action.execute();
-                if (result) {
-                  setSaveDialogOpenend(true);
-                }
+                setSaveConfirmationOpenend(true);
               }}
             />
             <Dialog
@@ -387,6 +386,20 @@ export function ToolNavbar() {
                 </span>
               </Text>
             </Dialog>
+            <ConfirmationModal
+              opened={saveConfirmationOpenend}
+              setOpened={setSaveConfirmationOpenend}
+              name={designName}
+              setName={setDesignName}
+              onSave={() => {
+                let action = new SaveAction();
+                const result = action.execute(designName);
+                if (result) {
+                  setSaveDialogOpenend(true);
+                }
+              }}
+            ></ConfirmationModal>
+
             {/* <NavbarLink
               onClick={handleChange}
               icon={Upload}

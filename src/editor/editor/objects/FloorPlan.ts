@@ -102,8 +102,7 @@ export class FloorPlan extends Container {
     // popup.print();
   }
 
-  public save() {
-    const designName = `My Design ${new Date().toISOString()}`;
+  public save(designName:String=`My Design ${new Date().toISOString()}`) {
     let floorPlan = this.serializer.serialize(
       this.floors,
       this.furnitureId,

@@ -9,8 +9,8 @@ export class SaveAction implements Action {
     this.receiver = FloorPlan.Instance;
   }
 
-  public async execute() {
-    let data = this.receiver.save();
+  public async execute(designName) {
+    let data = this.receiver.save(designName);
     //console.log(JSON.parse(data));
     const image = await this.receiver.getImage();
     const result = await addDesign(JSON.parse(data), image);
