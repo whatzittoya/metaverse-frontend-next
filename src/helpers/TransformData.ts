@@ -24,7 +24,8 @@ export function transformForSave(data) {
     const f = data.floors[0].furnitureArray;
     const person = f.find((obj) => obj.category === "person");
     data.person = person;
-    const json_data = f.filter(function (obj) {
+    const json_data = data;
+    json_data.floors[0].furnitureArray = f.filter(function (obj) {
       if (obj.category === "person") {
         data.person = obj;
       }
