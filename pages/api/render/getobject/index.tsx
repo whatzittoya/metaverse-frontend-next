@@ -1,4 +1,4 @@
-const api = process.env.NEXT_PUBLIC_API;
+const api = process.env.NEXT_PUBLIC_API_IP;
 const token = process.env.NEXT_PUBLIC_TOKEN;
 export default async function handler(req, res) {
   if (req.method === "GET") {
