@@ -1,7 +1,7 @@
 // how many pixels is a meter
 export const METER = 100;
 export const WALL_THICKNESS = 0.2 * METER;
-export const INTERIOR_WALL_THICKNESS = 0.16 * METER;
+export const INTERIOR_WALL_THICKNESS = 0.05 * METER;
 
 export const LABEL_OFFSET = 10;
 
