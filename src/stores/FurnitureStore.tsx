@@ -15,6 +15,7 @@ export interface FurnitureData {
   width: number;
   height: number;
   imagePath: string;
+  thumbnail: string;
   category?: any;
   zIndex?: number;
 }
@@ -38,7 +39,6 @@ export const useFurnitureStore = create<FurnitureStore>((set) => ({
   },
   getCurrentFurnitureData: async (categoryId: string) => {
     let res = await (await getCategoryInfo(categoryId)).json();
-
     set(() => ({
       currentFurnitureData: transformData(res),
     }));

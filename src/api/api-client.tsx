@@ -20,7 +20,7 @@ export function getCategoriesRequest() {
 
 export function getCategoryInfo(categoryId: string) {
   return fetch(
-    `${endpoint}items/object?fields=id,name,width,height,image,category.name&filter[category][id]=${categoryId}`
+    `${endpoint}items/object?fields=id,name,width,height,image,thumbnail,category.name&filter[category][id]=${categoryId}`
   );
 }
 
@@ -78,7 +78,7 @@ export async function addDesign<T>(data, blob) {
 
 export async function getDesign(id) {
   const res = await axios.get(
-    `${endpoint}items/design/${id}?fields=name,id,object.*,object.object_id.id,object.object_id.name,object.object_id.image,object.object_id.category.name,wall.*`,
+    `${endpoint}items/design/${id}?fields=name,id,object.*,object.object_id.id,object.object_id.name,object.object_id.image,object.object_id.thumbnail,object.object_id.category.name,wall.*`,
     { headers }
   );
   const data = res.data;
@@ -86,6 +86,7 @@ export async function getDesign(id) {
   delete data.data;
   (data.floors[0].furnitureArray = data.floors[0].object).map((obj) => {
     obj.texturePath = obj.object_id.image;
+    obj.thumbnail = obj.object_id.thumbnail;
     obj.name = obj.object_id.name;
     obj.category = obj.object_id.category.name;
     obj.attachedToLeft = obj.attachedtoleft;

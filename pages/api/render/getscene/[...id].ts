@@ -12,7 +12,15 @@ export default async function handler(req, res) {
       })
         .then((r) => r.json())
         .then((data) => {
-          res.status(200).json(JSON.parse(data.data.json));
+          const data_json = JSON.parse(data.data.json);
+          console.log(data_json);
+          data_json.floors[0].furnitureArray =
+            data_json.floors[0].furnitureArray.map((obj) => {
+              obj.y = obj.y * -1;
+              return obj;
+            });
+
+          res.status(200).json(data_json);
         });
     }
   }

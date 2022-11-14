@@ -20,7 +20,7 @@ export function FurnitureItem(item: IFurnitureData) {
       <Card.Section style={{ height: 120, padding: 5 }}>
         <Center>
           <Image
-            src={`${endpoint}assets/${data.imagePath}`}
+            src={`${endpoint}assets/${data.thumbnail}`}
             fit="contain"
             height={115}
             alt={data.name}
