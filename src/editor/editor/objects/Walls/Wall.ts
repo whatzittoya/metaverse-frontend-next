@@ -120,6 +120,7 @@ export class Wall extends Graphics {
     if (theta < 0) theta = 360 + theta; // range [0, 360)
     this.length = euclideanDistance(this.x1, this.x2, this.y1, this.y2);
 
+    //draw texture wall
     this.beginFill().drawRect(0, 0, this.length, this.thickness).endFill();
     this.position.set(this.x1, this.y1);
     this.angle = theta;
@@ -168,6 +169,16 @@ export class Wall extends Graphics {
 
   private onMouseDown(ev: InteractionEvent) {
     ev.stopPropagation();
+    // const graphics = new Graphics();
+    // graphics.beginFill(0xff3300);
+    // graphics.lineStyle(4, 0xffd900, 1);
+    // graphics.moveTo(50, 350);
+    // graphics.lineTo(250, 350);
+    // graphics.lineTo(100, 400);
+    // graphics.lineTo(50, 350);
+    // graphics.closePath();
+    // graphics.endFill();
+    // this.addChild(graphics);
 
     let coords = {
       x: viewportX(ev.data.global.x),

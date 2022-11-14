@@ -1,6 +1,7 @@
 import { IViewportOptions, PluginManager, Viewport } from "pixi-viewport";
 import {
   Application,
+  Graphics,
   InteractionEvent,
   isMobile,
   Loader,
@@ -29,6 +30,7 @@ export class Main extends Viewport {
   bkgPattern: TilingSprite;
   public pointer: Pointer;
   public preview: Preview;
+  public g: any;
   constructor(options: IViewportOptions) {
     super(options);
 
@@ -37,6 +39,16 @@ export class Main extends Viewport {
     // Start loading!
     Loader.shared.load();
     this.preview = new Preview();
+
+    // const graphics = new Graphics();
+    // graphics.lineStyle(4, 0xffd900, 1);
+    // graphics.moveTo(50, 350);
+    // graphics.lineTo(250, 350);
+    // graphics.lineTo(100, 400);
+    // graphics.lineTo(50, 350);
+    // graphics.closePath();
+    // graphics.endFill();
+    // this.addChild(graphics);
     this.addChild(this.preview.getReference());
     this.cursor = "none";
   }
@@ -47,13 +59,19 @@ export class Main extends Viewport {
       .clamp({ direction: "all" })
       .pinch()
       .wheel()
-      .clampZoom({ minScale: 1.0, maxScale: 6.0 });
+      .clampZoom({ minScale: 0.3, maxScale: 6.0 });
     this.bkgPattern = TilingSprite.from("/pattern.svg", {
       width: this.worldWidth ?? 0,
       height: this.worldHeight ?? 0,
     });
     this.center = new Point(this.worldWidth / 2, this.worldHeight / 2);
     this.addChild(this.bkgPattern);
+    //add custom pattern
+    // this.bkgPattern = TilingSprite.from("/floor.svg", {
+    //   width: this.worldWidth / 2 ?? 0,
+    //   height: this.worldHeight / 2 ?? 0,
+    // });
+    // this.addChild(this.bkgPattern);
 
     this.floorPlan = FloorPlan.Instance;
     this.addChild(this.floorPlan);
@@ -93,6 +111,7 @@ export class Main extends Viewport {
   }
   private checkTools(ev: InteractionEvent) {
     ev.stopPropagation();
+
     if (ev.data.button == 2 || ev.data.button == 2) {
       return;
     }
