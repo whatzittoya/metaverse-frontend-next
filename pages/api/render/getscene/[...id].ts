@@ -16,7 +16,12 @@ export default async function handler(req, res) {
           console.log(data_json);
           data_json.floors[0].furnitureArray =
             data_json.floors[0].furnitureArray.map((obj) => {
+              const height = obj.height * 100;
+              obj.y += height / 2;
               obj.y = obj.y * -1;
+
+              const width = obj.width * 100;
+              obj.x += width / 2;
               return obj;
             });
           data_json.floors[0].wallNodes = data_json.floors[0].wallNodes.map(
