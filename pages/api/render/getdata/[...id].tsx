@@ -1,5 +1,6 @@
 import NextCors from "nextjs-cors";
-
+const api = process.env.NEXT_PUBLIC_API_LOCAL;
+const token = process.env.NEXT_PUBLIC_TOKEN;
 export default async function handler(req, res) {
   await NextCors(req, res, {
     // Options
@@ -8,26 +9,18 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
   if (req.method === "GET") {
-    const data = [
-      {
-        status: "Online",
-      },
-      {
-        status: "Offline",
-      },
-      {
-        status: "Working",
-      },
-      {
-        status: "Not responding",
-      },
-      {
-        status: "Broken",
-      },
-    ];
     const { id } = req.query;
     if (id !== null) {
-      res.status(200).json({ ...data[id] });
+      fetch(`${api}items/object_status/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          res.status(200).json({ ...data.data });
+        });
     }
   }
 }
