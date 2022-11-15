@@ -21,11 +21,15 @@ export default async function handler(req, res) {
             });
           data_json.floors[0].wallNodes = data_json.floors[0].wallNodes.map(
             (obj) => {
-              obj.y = obj.y * -1;
+              if ("y" in obj) {
+                obj.y = obj.y * -1;
+              }
               return obj;
             }
           );
-          data_json.person.y *= -1;
+          if ("person" in data_json) {
+            data_json.person.y *= -1;
+          }
           res.status(200).json(data_json);
         });
     }
