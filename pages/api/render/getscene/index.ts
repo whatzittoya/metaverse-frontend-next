@@ -1,6 +1,13 @@
+import NextCors from "nextjs-cors";
 const api = process.env.NEXT_PUBLIC_API_LOCAL;
 const token = process.env.NEXT_PUBLIC_TOKEN;
 export default async function handler(req, res) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
   if (req.method === "GET") {
     fetch(
       `${api}items/design/?fields=id,name,user_created.first_name&filter[status][_eq]=Published`,
