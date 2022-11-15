@@ -19,9 +19,11 @@ export class Furniture extends Sprite {
   public resourcePath: string;
   private orientation: number;
   public centerAngle: number;
-  public category: String;
-  public name: String;
-  public description: String;
+  public category: string;
+  public name: string;
+  public description: string;
+  public api: string;
+  public interactable: string;
   constructor(
     data: FurnitureData,
     id: number,
@@ -35,6 +37,9 @@ export class Furniture extends Sprite {
     console.log(data);
     this.name = data.name;
     this.description = data.description;
+    this.api = data.api;
+    this.interactable = data.interactable;
+
     this.resourcePath = data.imagePath;
     this.id = id;
     this.object_id = parseInt(data._id);
@@ -155,10 +160,12 @@ export class Furniture extends Sprite {
             id: this.id,
             name: this.name,
             description: this.description ? this.description : "",
+            api: this.api ? this.api : "",
+            interactable: this.interactable ? this.interactable : "false",
           },
         });
         useStore.setState({ propPanel: true });
-        console.log(this);
+        //console.log(this);
         const action = new EditFurnitureAction(this);
         action.execute();
         break;
@@ -188,6 +195,8 @@ export class Furniture extends Sprite {
       zIndex: this.zIndex,
       name: this.name,
       description: this.description,
+      api: this.api,
+      interactable: this.interactable,
       id: this.id,
       texturePath: this.resourcePath,
       rotation: this.rotation,

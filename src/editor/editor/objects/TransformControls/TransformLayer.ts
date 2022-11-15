@@ -137,10 +137,21 @@ export class TransformLayer extends Container {
       this.handles[HandleType.Rotate].visible = false;
       this.handles[HandleType.HorizontalVertical].visible = false;
     } else {
-      this.handles[HandleType.Rotate].visible = true;
-      this.handles[HandleType.Vertical].visible = true;
-      this.handles[HandleType.Horizontal].visible = true;
-      this.handles[HandleType.HorizontalVertical].visible = true;
+      if (this.target.width < 100 || this.target.height < 100) {
+        this.handles[HandleType.Move].width = 5;
+        this.handles[HandleType.Move].height = 5;
+        this.handles[HandleType.Rotate].visible = false;
+        this.handles[HandleType.Vertical].visible = false;
+        this.handles[HandleType.Horizontal].visible = false;
+        this.handles[HandleType.HorizontalVertical].visible = false;
+      } else {
+        this.handles[HandleType.Rotate].visible = true;
+        this.handles[HandleType.Vertical].visible = true;
+        this.handles[HandleType.Horizontal].visible = true;
+        this.handles[HandleType.HorizontalVertical].visible = true;
+        this.handles[HandleType.Move].width = 20;
+        this.handles[HandleType.Move].height = 20;
+      }
     }
 
     // set labels
@@ -204,6 +215,13 @@ export class TransformLayer extends Container {
       this.points[Coord.Vertical],
       this.target.height
     );
+    if (this.target.width < 100 || this.target.height < 100) {
+      this.labels[LabelAxis.Horizontal].scale.set(0.4, 0.4);
+      this.labels[LabelAxis.Vertical].scale.set(0.4, 0.4);
+    } else {
+      this.labels[LabelAxis.Horizontal].scale.set(1, 1);
+      this.labels[LabelAxis.Vertical].scale.set(1, 1);
+    }
     this.labels[LabelAxis.Vertical].angle = 360 - this.target.angle;
   }
 }

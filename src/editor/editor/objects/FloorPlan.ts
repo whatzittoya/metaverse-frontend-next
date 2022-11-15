@@ -102,7 +102,7 @@ export class FloorPlan extends Container {
     // popup.print();
   }
 
-  public save(designName:String=`My Design ${new Date().toISOString()}`) {
+  public save(designName: String = `My Design ${new Date().toISOString()}`) {
     let floorPlan = this.serializer.serialize(
       this.floors,
       this.furnitureId,
@@ -175,8 +175,18 @@ export class FloorPlan extends Container {
     );
   }
 
-  public updateFurnitureDesc(id: number, desc: string) {
-    this.floors[this.currentFloor].updateFurnitureDesc(id, desc);
+  public updateFurnitureDesc(
+    id: number,
+    desc: string,
+    api: string,
+    interactable: string
+  ) {
+    this.floors[this.currentFloor].updateFurnitureDesc(
+      id,
+      desc,
+      api,
+      interactable
+    );
   }
 
   public setFurniturePosition(

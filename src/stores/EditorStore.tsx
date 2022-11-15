@@ -12,7 +12,9 @@ export enum ToolMode {
 export interface CurrentFurniture {
   id: number;
   name: String;
-  description: String;
+  description: string;
+  api: string;
+  interactable: string;
 }
 
 export interface EditorStore {
@@ -34,7 +36,13 @@ export const useStore = create<EditorStore>((set) => ({
   activeTool: Tool.View,
   floor: 0,
   snap: true,
-  furniture: { id: 0, name: "", description: "" },
+  furniture: {
+    id: 0,
+    name: "",
+    description: "",
+    api: "",
+    interactable: "false",
+  },
   propPanel: false,
   setMode: (mode: ToolMode) => {
     set(() => ({

@@ -15,6 +15,6 @@ export class EditFurnitureAction implements Action {
 
   public execute() {
     this.receiver.select(this.furniture);
-    console.log("select");
+    //console.log("select");
   }
 }

@@ -12,6 +12,8 @@ export interface FurnitureData {
   _id?: string;
   name?: string;
   description?: string;
+  api?: string;
+  interactable?: string;
   width: number;
   height: number;
   imagePath: string;

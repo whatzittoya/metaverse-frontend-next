@@ -34,6 +34,8 @@ export class Floor extends Container {
           _id: fur.object_id,
           name: fur.name,
           description: fur.description,
+          api: fur.api,
+          interactable: fur.interactable,
           category: fur.category,
         };
         if (fur.zIndex) {
@@ -171,8 +173,15 @@ export class Floor extends Container {
     return plan;
   }
 
-  public updateFurnitureDesc(id: number, descr: string) {
+  public updateFurnitureDesc(
+    id: number,
+    descr: string,
+    api: string,
+    interactable: string
+  ) {
     this.furnitureArray.get(id).description = descr;
+    this.furnitureArray.get(id).api = api;
+    this.furnitureArray.get(id).interactable = interactable;
   }
 
   public setFurniturePosition(

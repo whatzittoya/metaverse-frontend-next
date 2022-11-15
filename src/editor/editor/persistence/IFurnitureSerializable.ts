@@ -4,6 +4,8 @@ export interface IFurnitureSerializable {
   texturePath: string;
   name: string;
   description?: string;
+  api?: string;
+  interactable?: string;
   width: number;
   height: number;
   rotation: number;

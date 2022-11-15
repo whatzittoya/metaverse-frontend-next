@@ -45,7 +45,8 @@ export class Wall extends Graphics {
     this.startRightNode = { x: 0, y: 0 };
     this.setLineCoords();
     this.label = new Label(0);
-
+    //change scale of wall label
+    this.label.scale.set(0.4, 0.4);
     this.addChild(this.label);
     this.thickness = INTERIOR_WALL_THICKNESS;
     this.pivot.set(0, INTERIOR_WALL_THICKNESS / 2);

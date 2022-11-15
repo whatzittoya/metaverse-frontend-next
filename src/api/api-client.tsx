@@ -66,8 +66,13 @@ export async function addDesign<T>(data, blob) {
     headers: headers_multi,
   });
   data.image = upload.data.data.id;
+  console.log(data);
+
   const transfData = transformForSave(data);
-  //console.log(transfData);
+  console.log("final");
+
+  console.log(transfData);
+
   const url = `${endpoint}items/design/`;
   const r = await axios.post(url, transfData, {
     headers,
