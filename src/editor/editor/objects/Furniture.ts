@@ -43,6 +43,9 @@ export class Furniture extends Sprite {
     this.resourcePath = data.imagePath;
     this.id = id;
     this.object_id = parseInt(data._id);
+    this.description=""
+    this.api=""
+    this.interactable="false"
     this.category = data.category;
     this.orientation = 0;
     this.cursor = "pointer";
@@ -113,9 +116,22 @@ export class Furniture extends Sprite {
 
   private onRightDown(ev: InteractionEvent) {
     ev.stopPropagation();
-    this.switchOrientation();
-
-    return;
+    //this.switchOrientation();
+    switch (useStore.getState().activeTool) {
+      case Tool.Edit: {
+        useStore.setState({
+          furniture: {
+            id: this.id,
+            name: this.name,
+            description: this.description ? this.description : "",
+            api: this.api ? this.api : "",
+            interactable: this.interactable ? this.interactable : "false",
+          },
+        });
+        useStore.setState({ propPanel: true });
+      }
+    }
+    //return;
   }
   private setOrientation(number) {
     if (number > 0) {
@@ -155,16 +171,6 @@ export class Furniture extends Sprite {
     }
     switch (useStore.getState().activeTool) {
       case Tool.Edit: {
-        useStore.setState({
-          furniture: {
-            id: this.id,
-            name: this.name,
-            description: this.description ? this.description : "",
-            api: this.api ? this.api : "",
-            interactable: this.interactable ? this.interactable : "false",
-          },
-        });
-        useStore.setState({ propPanel: true });
         //console.log(this);
         const action = new EditFurnitureAction(this);
         action.execute();
