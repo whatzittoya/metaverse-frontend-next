@@ -20,7 +20,7 @@ export default async function handler(req, res) {
         .then((r) => r.json())
         .then((data) => {
           res.status(200).json({
-            status: `${data.data.status} | level: ${data.data.level} | volume: ${data.data.volume} | capacity: ${data.data.capacity} | flow_rate: ${data.data.flow_rate} | P&ID: ${data.data.pid}`,
+            status: `${data.data.status}  | P&ID: ${data.data.pid}`,
           });
         });
     }
